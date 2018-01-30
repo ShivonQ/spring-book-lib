@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Book owners database</title>
+</head>
+<body>
+<h1>Book Owners</h1>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Books</th>
+        <th></th>
+    </tr>
+    <tr th:each="owner : ${owners}">
+        <td th:text="${owner.firstName} + ' ' + ${owner.lastName}"></td>
+        <td>
+            <span th:each="book,iterStat : ${owner.books}">
+                <span th:text="${book.title}"></span><th:block th:if="${!iterStat.last}">,</th:block>
+            </span>
+        </td>
+        <td>
+            <a th:href="@{/owner/{id}(id=${owner.id})}">VIEW PROFILE</a>
+        </td>
+    </tr>
+</table>
+<hr/>
+<form th:action="@{owners}" method="post" enctype="multipart/form-data">
+    <div>
+        First Name: <input name="firstName"/>
+    </div>
+    <div>
+        Last Name: <input name="lastName"/>
+    </div>
+    <div>
+        Email Address: <input name="email"/>
+    </div>
+    <div>
+        Phone Number: <input name="phone"/>
+    </div>
+    <div>
+        <input type="submit" value="Add Book Owner" name="button"/>
+    </div>
+</form>
+
+</body>
+</html>
